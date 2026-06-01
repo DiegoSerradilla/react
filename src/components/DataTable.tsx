@@ -1,12 +1,41 @@
-interface DataTableProps<T> {
-  datos: T[];
+interface Column<T> {
+  key: keyof T;
+  header: string;
 }
 
-function DataTable<T>({ datos }: DataTableProps<T>) {
+interface DataTableProps<T> {
+  datos: T[];
+  columnas: Column<T>[];
+}
+
+function DataTable<T>({
+  datos,
+  columnas,
+}: DataTableProps<T>) {
   return (
-    <div>
-      <pre>{JSON.stringify(datos, null, 2)}</pre>
-    </div>
+    <table border={1}>
+      <thead>
+        <tr>
+          {columnas.map((columna) => (
+            <th key={String(columna.key)}>
+              {columna.header}
+            </th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        {datos.map((fila, index) => (
+          <tr key={index}>
+            {columnas.map((columna) => (
+              <td key={String(columna.key)}>
+                {String(fila[columna.key])}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 

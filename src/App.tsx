@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PanelUsuario from "./components/PanelUsuario.tsx";
-import DataTable from "./components/DataTable"
+import DataTable from "./components/DataTable";
+import { calcularDiasEntreFechas } from "./utils/fechas";
 
 function App() {
   const [contador, setContador] = useState(0);
@@ -38,9 +39,31 @@ function App() {
 
   const [nuevaTarea, setNuevaTarea] = useState("");
 
+  const columnas = [
+    {
+      key: "id" as keyof Tarea,
+      header: "ID",
+    },
+    {
+      key: "titulo" as keyof Tarea,
+      header: "Título",
+    },
+    {
+      key: "completada" as keyof Tarea,
+      header: "Completada",
+    },
+  ];
+
+  const dias = calcularDiasEntreFechas(
+    new Date("2026-01-01"),
+    new Date("2026-01-10"),
+  );
+
   return (
     <div>
       <h1>Mi proyecto React con TypeScript</h1>
+
+      <p>Diferencia de días: {dias}</p>
 
       <input
         type="text"
@@ -125,9 +148,7 @@ function App() {
         </div>
       ))}
 
-      <DataTable datos={tareas} />
-
-      
+      <DataTable datos={tareas} columnas={columnas} />
     </div>
   );
 }
