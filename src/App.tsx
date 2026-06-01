@@ -1,5 +1,6 @@
 import { useState } from "react";
-import PanelUsuario from "./components/PanelUsuario";
+import PanelUsuario from "./components/PanelUsuario.tsx";
+import DataTable from "./components/DataTable"
 
 function App() {
   const [contador, setContador] = useState(0);
@@ -123,6 +124,10 @@ function App() {
           <p>{tarea.completada ? "Completada" : "Pendiente"}</p>
         </div>
       ))}
+
+      <DataTable datos={tareas} />
+
+      
     </div>
   );
 }
